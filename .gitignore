@@ -1,0 +1,23 @@
+# IntelliJ IDEA
+.idea/
+*.iml
+
+# Compiled Java
+out/
+target/
+*.class
+
+# Build artifacts
+*.jar
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# VS Code
+.vscode/
+algs4.jar
+algs4-data
