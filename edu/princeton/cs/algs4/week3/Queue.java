@@ -1,49 +1,64 @@
 package princeton.cs.algs4.week3;
 
 public class Queue {
-    String[] s;
-    int tail;
-    int head;
+    public class Node{
+        String data;
+        Node next;
 
-    public Queue(){
-        s = new String[10];
-        tail = 0;
-        head = 0;
-    }
-
-    public void resize(int cap){
-        String[] copy = new String[cap];
-
-        int n = tail - head;
-        for (int i = 0; i < n; i++){
-            copy[i] = s[head + i];
+        public Node(String data){
+            this.data = data;
+            next = null;
         }
-        s = copy;
-        head = 0;
-        tail = n;
     }
+
+    public class Stack{
+        Node top;
+
+        public Stack(){
+            top = null;
+        }
+
+        public boolean isEmpty(){
+            return top == null;
+        }
+
+        public void push(String data){
+            Node newNode = new Node(data);
+
+            newNode.next = top;
+            top = newNode;
+        }
+
+        public String pop(){
+            Node node = top;
+            String data = node.data;
+            top = node.next;
+            node = null;
+            return data;
+        }
+    }
+
+    Stack inStack;
+    Stack outStack;
 
     public boolean isEmpty(){
-        return tail == head;
+        return inStack.isEmpty() && outStack.isEmpty();
+    }
+
+    public void transfer(){
+        while (!inStack.isEmpty()){
+            outStack.push(inStack.pop());
+        }
     }
 
     public void enqueue(String data){
-        if (tail == s.length){
-            if (head > 0){
-                resize(s.length);
-            }
-            else{
-                resize(s.length * 2);
-            }
-        }
-        else{
-            s[tail++] = data;
-        }
+        inStack.push(data)
     }
 
     public String dequeue(){
-        String res = s[head];
-        s[head++] = null;
-        return res;
+        if (outStack.isEmpty()){
+            transfer();
+        }
+        return outStack.pop();
     }
 }
